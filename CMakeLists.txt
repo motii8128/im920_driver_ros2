@@ -13,7 +13,7 @@ target_include_directories(target_im920_driver_ros2
 )
 
 rclcpp_components_register_node(target_im920_driver_ros2
-  PLUGIN "im920_driver_ros2::IM920Driver"
+  PLUGIN "im920_driver_ros2::IM920DriverROS2"
   EXECUTABLE im920_driver_ros2_node
 )
 
