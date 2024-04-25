@@ -1,0 +1,12 @@
+<launch>
+    <node pkg="im920_driver_ros2" exec="im920_driver_ros2_node">
+        <remap from="/im920/write" to="/im920/write"/>
+        <remap from="/im920/read" to="/im920/read"/>
+
+        <param name="port_name" value="/dev/ACM0"/>
+        <param name="baud_rate" value="115200"/>
+        <param name="enable_write_log" value="true"/>
+        <param name="enable_read_log" value="true"/>
+        <param name="child_id" value="2"/>
+    </node>
+</launch>

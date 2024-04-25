@@ -101,24 +101,24 @@ namespace im920_driver_ros2
         {
             if(id > 999)
             {
-                return std::to_string(id);
+                return std::to_string(id) + ",";
             }
             else if(id > 99)
             {
                 std::string result;
-                result = "0" + std::to_string(id);
+                result = "0" + std::to_string(id) + ",";
                 return result;
             }
             else if(id > 9)
             {
                 std::string result;
-                result = "00" + std::to_string(id);
+                result = "00" + std::to_string(id) + ",";
                 return result;
             }
             else
             {
                 std::string result;
-                result = "000" + std::to_string(id);
+                result = "000" + std::to_string(id) + ",";
                 return result;
             }
         }
