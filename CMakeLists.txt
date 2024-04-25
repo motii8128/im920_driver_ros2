@@ -17,6 +17,11 @@ rclcpp_components_register_node(target_im920_driver_ros2
   EXECUTABLE im920_driver_ros2_node
 )
 
+install(DIRECTORY
+launch
+DESTINATION share/${PROJECT_NAME}
+)
+
 ament_auto_package(
   INSTALL_TO_SHARE
 )

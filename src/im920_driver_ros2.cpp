@@ -81,7 +81,10 @@ namespace im920_driver_ros2
 
         if(enable_read_log_)
         {
-            
+            RCLCPP_INFO(this->get_logger(), "Read:%s", rx_packet.c_str());
         }
     }
 }
+
+#include <rclcpp_components/register_node_macro.hpp>
+RCLCPP_COMPONENTS_REGISTER_NODE(im920_driver_ros2::IM920DriverROS2)
