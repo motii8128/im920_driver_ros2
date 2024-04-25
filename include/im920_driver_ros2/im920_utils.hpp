@@ -97,6 +97,32 @@ namespace im920_driver_ros2
             return baud_rate_;
         }
 
+        std::string id_to_string(int id)
+        {
+            if(id > 999)
+            {
+                return std::to_string(id);
+            }
+            else if(id > 99)
+            {
+                std::string result;
+                result = "0" + std::to_string(id);
+                return result;
+            }
+            else if(id > 9)
+            {
+                std::string result;
+                result = "00" + std::to_string(id);
+                return result;
+            }
+            else
+            {
+                std::string result;
+                result = "000" + std::to_string(id);
+                return result;
+            }
+        }
+
         private:
         speed_t get_baud_rate(int baud_rate)
         {

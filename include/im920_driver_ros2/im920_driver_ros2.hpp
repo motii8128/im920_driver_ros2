@@ -5,7 +5,9 @@
 
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/string.hpp>
-#include <std_msgs/msg/bool.hpp>
+
+using std::placeholders::_1;
+using namespace std::chrono_literals;
 
 namespace im920_driver_ros2
 {
@@ -19,12 +21,12 @@ namespace im920_driver_ros2
 
         private:
         std::string port_name_;
-        int baud_rate;
+        int baud_rate_, child_id_;
         bool enable_write_log_, enable_read_log_;
         std::shared_ptr<im920_driver_ros2::IM920Serial> im920_serial_;
 
         rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscriber_;
-        rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr publisher_;
+        rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
         rclcpp::TimerBase::SharedPtr timer_;
     };
 }
