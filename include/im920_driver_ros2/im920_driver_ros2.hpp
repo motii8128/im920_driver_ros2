@@ -8,6 +8,6 @@ namespace im920_driver_ros2
     class IM920Driver : public rclcpp::Node
     {
         
-    }
+    };
 }
 #endif
