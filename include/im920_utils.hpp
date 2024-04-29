@@ -19,7 +19,8 @@ namespace im920_driver_ros2
         public:
         IM920Serial(std::string port_name="/dev/ttyACM0", int baud_rate=115200):port_(port_name),baud_rate_(baud_rate)
         {
-
+            close(fd_);
+            fd_ = 0;
         }
         static IM920Serial *init_im920_serial(std::string port_name, int baud_rate)
         {

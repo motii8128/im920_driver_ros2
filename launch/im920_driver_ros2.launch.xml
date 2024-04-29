@@ -3,10 +3,16 @@
         <remap from="/im920/write" to="/im920/write"/>
         <remap from="/im920/read" to="/im920/read"/>
 
-        <param name="port_name" value="/dev/USB0"/>
+        <param name="port_name" value="/dev/ACM0"/>
         <param name="baud_rate" value="115200"/>
         <param name="enable_write_log" value="true"/>
         <param name="enable_read_log" value="false"/>
         <param name="child_id" value="2"/>
+    </node>
+
+    <node pkg="joy_twist_rust" exec="joy_twist_rust">
+    </node>
+
+    <node pkg="power_to_string" exec="power_to_string_node">
     </node>
 </launch>

@@ -20,7 +20,7 @@ namespace im920_driver_ros2
 
         this->declare_parameter("port_name", "/dev/ttyACM0");
         this->get_parameter("port_name", port_name_);
-        
+
         this->declare_parameter("baud_rate", 115200);
         this->get_parameter("baud_rate", baud_rate_);
 
