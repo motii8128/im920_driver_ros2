@@ -7,12 +7,15 @@ namespace im920_driver_ros2
         subscriber_ = this->create_subscription<std_msgs::msg::String>(
             "/im920/write",
             0,
-            std::bind(&im920_driver_ros2::IM920DriverROS2::write_callback, this, _1));
+            std::bind(&im920_driver_ros2::IM920DriverROS2::topic_callback, this, _1));
         
         publisher_ = this->create_publisher<std_msgs::msg::String>("/im920/read", 0);
 
-        timer_ = this->create_wall_timer(
-            100ms, 
+        write_timer = this->create_wall_timer(
+            50ms,
+            std::bind(&im920_driver_ros2::IM920DriverROS2::write_callback, this));
+        read_timer_ = this->create_wall_timer(
+            50ms,
             std::bind(&im920_driver_ros2::IM920DriverROS2::read_callback, this));
 
         this->declare_parameter("port_name", "/dev/ttyACM0");
@@ -48,12 +51,14 @@ namespace im920_driver_ros2
         RCLCPP_INFO(this->get_logger(), "Start IM920DriverROS2 port:%s, baud_rate:%d", im920_serial_->get_port_name().c_str(), im920_serial_->get_baud_rate());
     }
 
-    void IM920DriverROS2::write_callback(const std_msgs::msg::String::SharedPtr msg)
+    void IM920DriverROS2::topic_callback(const std_msgs::msg::String::SharedPtr msg)
     {
-        std::string tx_packet;
-        tx_packet = "TXDU" + im920_serial_->id_to_string(child_id_) + msg->data;
+        tx_packet_ = "TXDU" + im920_serial_->id_to_string(child_id_) + msg->data;
+    }
 
-        int err = im920_serial_->write_serial(tx_packet);
+    void IM920DriverROS2::write_callback()
+    {
+        int err = im920_serial_->write_serial(tx_packet_);
         if(err < 0)
         {
             RCLCPP_ERROR(this->get_logger(), "Failed to write");
@@ -61,7 +66,7 @@ namespace im920_driver_ros2
 
         if(enable_write_log_)
         {
-            RCLCPP_INFO(this->get_logger(), "Write:%s", tx_packet.c_str());
+            RCLCPP_INFO(this->get_logger(), "Write:%s", tx_packet_.c_str());
         }
     }
 
@@ -74,7 +79,6 @@ namespace im920_driver_ros2
         {
             RCLCPP_ERROR(this->get_logger(), "Failed to read");
         }
-
         auto msg = std_msgs::msg::String();
         msg.data = rx_packet;
         publisher_->publish(msg);
